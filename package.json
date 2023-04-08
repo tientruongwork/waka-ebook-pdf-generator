@@ -4,7 +4,8 @@
   "description": "",
   "main": "build/main.bundle.js",
   "scripts": {
-    "start": "rimraf build && cross-env NODE_ENV=development webpack --watch",
+    "start": "yarn clean && cross-env NODE_ENV=development webpack --watch",
+    "clean": "rimraf build generated build..",
     "test": "jest --coverage"
   },
   "keywords": [],
