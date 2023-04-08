@@ -1,0 +1,7 @@
+node_modules
+build
+src/books/*
+coverage
+yarn-error.log
+generated
+.idea

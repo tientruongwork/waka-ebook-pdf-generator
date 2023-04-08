@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of books</title>
+</head>
+<body>
+<h1>There are books available to generate: </h1>
+<ul>
+    <% for(var i = 0; i < bookList.length; i++) { %>
+        <li>
+            <a href="./generate-book?bookName=<%= bookList[i] %>"> <%= bookList[i] %> </a>
+        </li>
+    <% } %>
+</ul>
+</body>
