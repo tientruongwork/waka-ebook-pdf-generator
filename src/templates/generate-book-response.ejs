@@ -9,7 +9,7 @@
 <ul>
     <% for(var i = 0; i < bookList.length; i++) { %>
         <li>
-            <a href="./generate-book?bookName=<%= bookList[i] %>"> <%= bookList[i] %> </a>
+            <a href="./generate-book?bookName=<%= bookList[i].bookName ;%>"> <%= bookList[i].bookNameOriginal ;%> </a>
         </li>
     <% } %>
 </ul>

@@ -11,7 +11,9 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "templates"));
 app.use("/generated", express.static("generated/"));
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
+
 app.use(storeBookRoute);
 app.use(generateBookRoute);
 

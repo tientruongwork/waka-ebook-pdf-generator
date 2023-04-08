@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import ejs from "ejs";
 import sortPages from "../utils/sortPages";
-import { BOOK_HEADER_HTML_PATH, BOOK_BODY_HTML_PATH, BOOK_STORE_PATH, PAGES_PATH, IMAGES_PATH } from "../constants/common";
+import { BOOK_HEADER_HTML_PATH, BOOK_BODY_HTML_PATH, BOOK_STORE_PATH, PAGES_PATH, IMAGES_PATH, TITLE_FILE_NAME } from "../constants/common";
 
 class GenerateBookController {
     protected sortedBooksName: string[] = [];
@@ -85,7 +85,14 @@ class GenerateBookController {
     public getAvailableBooks() {
         const booksPath = path.join(__dirname, BOOK_STORE_PATH);
         const files = fs.readdirSync(booksPath);
-        return files.filter((file) => fs.statSync(`${booksPath}/${file}`).isDirectory());
+        const bookList = files.filter((file) => fs.statSync(`${booksPath}/${file}`).isDirectory());
+        return bookList.map((bookName) => {
+            const title = fs.readFileSync(`${booksPath}/${bookName}/${PAGES_PATH}/${TITLE_FILE_NAME}`, "utf-8");
+            return {
+                bookNameOriginal: title,
+                bookName,
+            };
+        });
     }
 }
 

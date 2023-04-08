@@ -1,3 +1,4 @@
+import fs from "fs";
 import { StoreBookRequestBody } from "../interfaces/IStoreBook";
 import { PAGES_PATH, IMAGES_PATH, BOOK_STORE_PATH } from "../constants/common";
 import fetchImage from "../utils/fetchImage";
@@ -12,6 +13,10 @@ class StoreBookController {
         new BookDirectoryController(this.defaultFilePath).init();
     }
 
+    private buildTitlePath(): string {
+        return `${this.defaultFilePath}/${PAGES_PATH}/title.txt`;
+    }
+
     private buildFilePath(id: string): string {
         return `${this.defaultFilePath}/${PAGES_PATH}/page_${id}.html`;
     }
@@ -21,12 +26,23 @@ class StoreBookController {
     }
 
     public async store(reqBody: StoreBookRequestBody): Promise<void> {
-        const { id, content, images } = reqBody;
+        const { id, content, images, bookNameOriginal } = reqBody;
         const filePath: string = this.buildFilePath(id);
-        for await (const image of images) {
-            const imagePath = this.buildImagePath(image.alt);
-            await fetchImage(image.src, imagePath);
+
+        const titlePath = this.buildTitlePath();
+        if (!fs.existsSync(titlePath)) {
+            fs.writeFileSync(titlePath, bookNameOriginal);
         }
+
+        if (!fs.existsSync(filePath))
+            for await (const image of images) {
+                const imagePath = this.buildImagePath(image.alt);
+                try {
+                    await fetchImage(image.src, imagePath);
+                } catch (error: any) {
+                    console.log(error.message);
+                }
+            }
         await writePage(filePath, content);
     }
 }

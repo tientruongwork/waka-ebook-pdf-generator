@@ -35,6 +35,7 @@ describe("testing StoreBookController", () => {
         const testReqBody: StoreBookRequestBody = {
             id: "1",
             bookName: EXAMPLE_BOOK_NAME,
+            bookNameOriginal: "ORIGINAL",
             content: DUMMY_CONTENT,
             images: [
                 {
