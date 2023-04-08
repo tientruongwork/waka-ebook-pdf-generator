@@ -32,7 +32,7 @@ class GenerateBookController {
     }
 
     public generate() {
-        console.log(this.bookPagesPath)
+        console.log(this.bookPagesPath);
         if (!fs.existsSync(this.bookPagesPath)) {
             throw new Error("Not found");
         }
@@ -48,7 +48,7 @@ class GenerateBookController {
         for (const bookName of this.sortedBooksName) {
             const bookContentPath = path.join(this.bookPagesPath, bookName);
             const data = fs.readFileSync(bookContentPath, "utf-8");
-            bookBodyData += data;
+            bookBodyData += `<div style="page-break-before:always; page-break-inside: avoid;">${data}</div>`;
         }
         return bookBodyData;
     }
