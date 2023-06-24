@@ -5,3 +5,5 @@
 
 # Installation & Usage: 
 - Contact me if you don't know how to use this repo by yourself :P
+
+## Give me a star if you like it :P
